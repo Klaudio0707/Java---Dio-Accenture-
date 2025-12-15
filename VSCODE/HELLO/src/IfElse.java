@@ -9,13 +9,22 @@ public class IfElse {
        var idade = scanner.nextInt();
        System.out.println("Você é emancipado? (s/n)");
        var emancipado = scanner.next().equalsIgnoreCase("s");
-        if (idade >= 18) {
-            System.out.printf("%s, Você é maior de idade.", nome);
-        }else if (idade >= 16 && emancipado){
-            System.out.printf("%s, Você é maior de idade por emancipação.", nome);
+        
+        var canDrive =  (idade >= 18 || (idade >= 16 && emancipado));
+        var message = "sem mensagem";
+         
+        if (canDrive) {
+            // Se pode dirigir, refinamos o motivo:
+            // Dica: Não precisa usar "emancipado == true", apenas "emancipado"
+            message = emancipado 
+                ? "Você pode dirigir, pois é emancipado."
+                : "Você pode dirigir, pois é maior de idade.";
         } else {
-            System.out.printf("%s, Você é menor de idade.", nome);
+            // Se caiu aqui, com certeza não pode dirigir.
+            // Não precisamos de ternário nem de IF.
+            message = "Você não pode dirigir, pois é menor de idade.";  
         }
-        }
+        System.out.printf("%s, %s", nome, message);
+    }
     }
 
