@@ -7,12 +7,14 @@ public class IfElse {
        var nome = scanner.next();
        System.out.printf("informe sua idade, %s? ",nome);
        var idade = scanner.nextInt();
-        // var emancipado = scanner.next().equalsIgnoreCase(anotherString: "sim");
-
+       System.out.println("Você é emancipado? (s/n)");
+       var emancipado = scanner.next().equalsIgnoreCase("s");
         if (idade >= 18) {
-            System.out.printf("%s Você é maior de idade.", nome);
+            System.out.printf("%s, Você é maior de idade.", nome);
+        }else if (idade >= 16 && emancipado){
+            System.out.printf("%s, Você é maior de idade por emancipação.", nome);
         } else {
-            System.out.printf("$s, Você é menor de idade.", nome);
+            System.out.printf("%s, Você é menor de idade.", nome);
         }
         }
     }
