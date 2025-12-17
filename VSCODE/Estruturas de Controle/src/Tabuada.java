@@ -4,12 +4,12 @@ public class Tabuada {
     public static void main(String[] args)  {
      Scanner scanner = new Scanner(System.in);
      System.out.println("Informe um numero para gerar a tabuada:");
-    var numero = scanner.nextInt();
+   int numero = scanner.nextInt();
     System.out.println("Informe qual operação voce deseja");
     System.out.println("+ - soma | - subtraçao | * multiplicação | / divisão ");
-    var operacao = scanner.next();
+    String operacao = scanner.next();
     for (int i = 1; i <= 10; i++){
-        var resultado = 0;
+        int resultado = 0;
     switch (operacao) {
         case  "+":
             resultado = numero + i; 
