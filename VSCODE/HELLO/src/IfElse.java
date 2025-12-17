@@ -14,14 +14,10 @@ public class IfElse {
         var message = "sem mensagem";
          
         if (canDrive) {
-            // Se pode dirigir, refinamos o motivo:
-            // Dica: Não precisa usar "emancipado == true", apenas "emancipado"
             message = emancipado 
                 ? "Você pode dirigir, pois é emancipado."
                 : "Você pode dirigir, pois é maior de idade.";
         } else {
-            // Se caiu aqui, com certeza não pode dirigir.
-            // Não precisamos de ternário nem de IF.
             message = "Você não pode dirigir, pois é menor de idade.";  
         }
         System.out.printf("%s, %s", nome, message);
