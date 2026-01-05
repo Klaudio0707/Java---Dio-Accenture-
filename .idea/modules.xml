@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/VSCODE/Estruturas de Controle/Estruturas de Controle.iml" filepath="$PROJECT_DIR$/VSCODE/Estruturas de Controle/Estruturas de Controle.iml" />
-      <module fileurl="file://$PROJECT_DIR$/VSCODE/Exercicios/Exercicios.iml" filepath="$PROJECT_DIR$/VSCODE/Exercicios/Exercicios.iml" />
       <module fileurl="file://$PROJECT_DIR$/VSCODE/HELLO/HELLO.iml" filepath="$PROJECT_DIR$/VSCODE/HELLO/HELLO.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Java---Dio-Accenture-.iml" filepath="$PROJECT_DIR$/.idea/Java---Dio-Accenture-.iml" />
     </modules>
