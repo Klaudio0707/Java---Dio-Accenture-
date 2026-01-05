@@ -67,18 +67,21 @@ public class Account {
             return;
         }
         if(chequeEspecialUsado > 0){
-            double valorComJuros = valor * 1.2;
-
-            if (valor >= valorComJuros) {
-             valor -= valorComJuros;
+            double dividaTotalComJuros = chequeEspecialUsado * 1.2;
+            if (valor >= dividaTotalComJuros) {
+             valor -= dividaTotalComJuros;
              chequeEspecialUsado = 0;
              System.out.println("Cheque especial quitado com juros 20%. Novo saldo do depósito: R$ " + valor);
             }else{
-                double proporcao = valor / valorComJuros;
-                chequeEspecialUsado -= chequeEspecialUsado *proporcao;
-                System.out.println("Pagamento parcial do cheque especial. Saldo restante do cheque especial: R$ " + chequeEspecialUsado);
-            }
+          double abateReal = valor / 1.2;
+            chequeEspecialUsado -= abateReal;
+            System.out.println("Pagamento parcial. Dívida restante no cheque especial: R$ " + chequeEspecialUsado);
+            valor = 0;
+        }
 
+       }else{
+        saldo += valor;
+        System.out.println("Depósito de R$ " + valor + " realizado. Novo saldo: R$ " + saldo);
        }
 
     }
