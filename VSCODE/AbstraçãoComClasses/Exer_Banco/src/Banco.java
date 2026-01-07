@@ -15,7 +15,7 @@ public class Banco {
         this.cnpj = cnpj;
         this.agencia = agencia;
         this.contas = new ArrayList<>();
-        this.proximoNumeroConta = 10001;
+        this.proximoNumeroConta = 1110;
     }
 
     public Account criarConta(Cliente cliente, double depositoInicial) {
@@ -46,13 +46,15 @@ public class Banco {
         Account origem = buscarConta(contaOrigem);
         Account destino = buscarConta(contaDestino);
 
-        if (origem == null || destino == null) {
+        if (origem == null || destino == null  ) {
             System.out.println("Conta não encontrada.");
             return false;
+        } else if (contas.size() == 1){
+            System.out.println("Não há contas suficientes para realizar a transferência.");
+            return false;
         }
-
         if (origem.sacar(valor)) {
-            destino.depositar(valor);
+            destino.depositar(valor, false);
             System.out.println("Transferência realizada: " + valor);
             return true;
         }
@@ -60,9 +62,7 @@ public class Banco {
     }
 
     public void relatorioGeral() {
-        double totalSaldo = contas.stream()
-                .mapToDouble(Account::getSaldo)
-                .sum();
+        double totalSaldo = contas.stream().mapToDouble(Account::getSaldo).sum();
         System.out.println(nome + " - Total de contas: " + contas.size());
         System.out.println("Saldo total no banco: R$ " + totalSaldo);
     }

@@ -35,8 +35,6 @@ public class Account {
     }
 
     public Cliente getCliente() {
-        System.out.println("Nome do cliente: " + cliente.getNome());
-        System.out.println("Endereço do cliente: " + cliente.getEndereco());
         return cliente;
     }
 
@@ -62,8 +60,41 @@ public class Account {
         return 0;
     }
 
-    public boolean pagarBoleto(double valor) {
-        return sacar(valor);
+    public boolean pagarBoleto(double valorBoleto) {
+      int opcao = 0;
+        if (!ativa || valorBoleto <= 0) {
+            opcao = 3;
+            return false;
+        }
+
+        double disponivel = getSaldoDisponivel();
+        if (valorBoleto > disponivel) {
+           opcao = 2;
+            return false;
+        }
+
+        if (valorBoleto < saldo) {
+            saldo -= valorBoleto;
+            opcao = 1;
+        } else if (valorBoleto == saldo) {
+            double restante = valorBoleto - saldo;
+            saldo = restante;
+            opcao = 2;
+        }
+        switch(opcao){
+            case 1:
+                System.out.println("Boleto pago com sucesso. Saldo: R$ " + saldo
+                + " | Cheque especial usado: R$ " + chequeEspecialUsado);
+                break;
+            case 2: 
+                System.out.println("Saldo insuficiente (incluindo cheque especial)." + saldo
+                + " | Cheque especial usado: R$ " + chequeEspecialUsado);
+                break;
+            case 3:
+                   System.out.println("Saque inválido: conta inativa ou valor inválido.");
+                   break;
+        }
+        return true;
     }
 
     public boolean estaUsandoChequeEspecial() {
@@ -74,18 +105,20 @@ public class Account {
         return usando;
     }
 
-    public void depositar(double valor) {
+    public void depositar(double valor, boolean pagamentoChequeEspecial) {
         if (!ativa || valor <= 0) {
             System.out.println("Depósito falhou: conta inativa ou valor inválido.");
             return;
         }
-        if (chequeEspecialUsado > 0) {
+        if (chequeEspecialUsado > 0 && pagamentoChequeEspecial == true) {
             double dividaTotalComJuros = chequeEspecialUsado * 1.2;
             if (valor >= dividaTotalComJuros) {
                 valor -= dividaTotalComJuros;
                 chequeEspecialUsado = 0;
                 System.out.println("Cheque especial quitado com juros 20%. Novo saldo do depósito: R$ " + valor);
-            } else {
+                saldo += valor;
+                System.out.println("Novo saldo: R$ " + saldo);
+            } else if ( valor < dividaTotalComJuros && pagamentoChequeEspecial == true) {
                 double abateReal = valor / 1.2;
                 chequeEspecialUsado -= abateReal;
                 System.out.println("Pagamento parcial. Dívida restante no cheque especial: R$ " + chequeEspecialUsado);
@@ -95,6 +128,7 @@ public class Account {
         } else {
             saldo += valor;
             System.out.println("Depósito de R$ " + valor + " realizado. Novo saldo: R$ " + saldo);
+            System.out.println("Cheque especial: R$ " + chequeEspecialUsado);
         }
 
     }
