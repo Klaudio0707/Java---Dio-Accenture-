@@ -32,14 +32,17 @@ public class App {
                 case 1 -> {
                     System.out.print("CPF:");
                     String cpf = sc.next();
-                    System.out.println("Nome: ");
-                    String nome = sc.next();
+                    sc.nextLine();
+                    System.out.print("Nome: ");
+                    String nome = sc.nextLine();
+                    sc.nextLine();
                     System.out.print("Idade: ");
                     int idade = sc.nextInt();
+                    sc.nextLine();
                     System.out.print("Endereço: ");
-                    String endereco = sc.next();
-                    System.out.println("Telefone: ");
-                    String telefone = sc.next();
+                    String endereco = sc.nextLine();
+                    System.out.print("Telefone: ");
+                    String telefone = sc.nextLine();
                     System.out.print("Deseja depositar um valor inicial? (S / N) ");
                     String resposta = sc.next();
                     double valorDeposito = 0.0;
@@ -50,7 +53,7 @@ public class App {
                     } else {
                         System.out.println("Conta criada sem depósito inicial.");
                     }
-                    //capturando os dados do cliente
+                    //dados do cliente
                     var novoCliente = new Cliente(cpf, nome, idade, endereco, telefone);
                     conta = banco.criarConta(novoCliente, valorDeposito);
                     System.out.println("Agora você está operando a conta de: " + novoCliente.getNome());
