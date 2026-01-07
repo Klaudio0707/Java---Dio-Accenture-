@@ -61,57 +61,69 @@ public class Account {
         }
         return 0;
     }
+
+    public boolean pagarBoleto(double valor) {
+        return sacar(valor);
+    }
+
+    public boolean estaUsandoChequeEspecial() {
+        boolean usando = chequeEspecialUsado > 0;
+        System.out.println(usando
+                ? "A conta está usando cheque especial."
+                : "A conta NÃO está usando cheque especial.");
+        return usando;
+    }
+
     public void depositar(double valor) {
         if (!ativa || valor <= 0) {
             System.out.println("Depósito falhou: conta inativa ou valor inválido.");
             return;
         }
-        if(chequeEspecialUsado > 0){
+        if (chequeEspecialUsado > 0) {
             double dividaTotalComJuros = chequeEspecialUsado * 1.2;
             if (valor >= dividaTotalComJuros) {
-             valor -= dividaTotalComJuros;
-             chequeEspecialUsado = 0;
-             System.out.println("Cheque especial quitado com juros 20%. Novo saldo do depósito: R$ " + valor);
-            }else{
-          double abateReal = valor / 1.2;
-            chequeEspecialUsado -= abateReal;
-            System.out.println("Pagamento parcial. Dívida restante no cheque especial: R$ " + chequeEspecialUsado);
-            valor = 0;
-        }
+                valor -= dividaTotalComJuros;
+                chequeEspecialUsado = 0;
+                System.out.println("Cheque especial quitado com juros 20%. Novo saldo do depósito: R$ " + valor);
+            } else {
+                double abateReal = valor / 1.2;
+                chequeEspecialUsado -= abateReal;
+                System.out.println("Pagamento parcial. Dívida restante no cheque especial: R$ " + chequeEspecialUsado);
+                valor = 0;
+            }
 
-       }else{
-        saldo += valor;
-        System.out.println("Depósito de R$ " + valor + " realizado. Novo saldo: R$ " + saldo);
-       }
+        } else {
+            saldo += valor;
+            System.out.println("Depósito de R$ " + valor + " realizado. Novo saldo: R$ " + saldo);
+        }
 
     }
 
     public boolean sacar(double valor) {
-    if (!ativa || valor <= 0) {
-        System.out.println("Saque inválido: conta inativa ou valor inválido.");
-        return false;
-    }
+        if (!ativa || valor <= 0) {
+            System.out.println("Saque inválido: conta inativa ou valor inválido.");
+            return false;
+        }
 
-    double disponivel = getSaldoDisponivel();
-    if (valor > disponivel) {
-        System.out.println("Saldo insuficiente (incluindo cheque especial).");
-        return false;
-    }
+        double disponivel = getSaldoDisponivel();
+        if (valor > disponivel) {
+            System.out.println("Saldo insuficiente (incluindo cheque especial).");
+            return false;
+        }
 
-    if (valor <= saldo) {
-        // só usa saldo
-        saldo -= valor;
-    } else {
-        // usa tudo do saldo e o resto vai para cheque especial
-        double restante = valor - saldo;
-        saldo = 0;
-        chequeEspecialUsado += restante;
-    }
+        if (valor <= saldo) {
+            // só usa saldo
+            saldo -= valor;
+        } else {
+            double restante = valor - saldo;
+            saldo = 0;
+            chequeEspecialUsado += restante;
+        }
 
-    System.out.println("Saque de R$ " + valor + " realizado. Saldo: R$ " + saldo +
-            " | Cheque especial usado: R$ " + chequeEspecialUsado);
-    return true;
-}
+        System.out.println("Saque de R$ " + valor + " realizado. Saldo: R$ " + saldo
+                + " | Cheque especial usado: R$ " + chequeEspecialUsado);
+        return true;
+    }
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
